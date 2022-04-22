@@ -38,6 +38,7 @@ float random_size()
 
 void rain(canvas& cnv)
 {
+
    cnv.fill_style(repaint_color.opacity(opacity));
    cnv.fill_rect({ 0, 0, window_size });
    for (auto i = 0; i < total; ++i)
@@ -58,7 +59,7 @@ void rain(canvas& cnv)
 
    if (opacity > persistence)
       opacity *= 0.8;
-   print_elapsed(cnv, window_size, colors::black.opacity(0.1));
+   print_elapsed(cnv, window_size, colors::black.opacity(0.1),colors::white.opacity(1));
 }
 
 void draw(canvas& cnv)
