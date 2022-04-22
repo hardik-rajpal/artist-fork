@@ -10,13 +10,14 @@ auto constexpr window_size = extent{ 640.0f, 480.0f };
 
 auto space = image{ "space.jpg" };
 auto size = space.size();
-float x_incr = 0.5;
-float y_incr = 0.5;
+float x_incr = 2;
+float y_incr = 2;
 float x = 0;
 float y = 0;
 
 void draw(canvas& cnv)
 {
+   
    cnv.translate(x, y);
    cnv.draw(space);
    x += x_incr;
