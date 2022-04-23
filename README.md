@@ -1,7 +1,7 @@
 Forked from https://github.com/cycfi/artist
 
 
-This repo contains vscode folders that make it easier to use this library in vscode and minor compile-time modifications to suit c++ 17 users. Further more, a couple of examples of my own as I cruise this library. All credits go to https://github.com/cycfi/.
+This repo contains vscode folders that make it easier to use this library in vscode and minor compile-time modifications to suit c++ 17 users. Furthermore, a couple of examples of my own as I cruise this library. All credits go to https://github.com/cycfi/.
 # ![Artist-Logo](https://cycfi.github.io/assets/img/artist/logo.png) Artist 2D Canvas Library
 
 ![alt Artist Sampler](https://cycfi.github.io/assets/img/artist/sampler.jpg)
