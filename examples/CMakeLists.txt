@@ -106,25 +106,15 @@ function(add_example name)
       )
 
    elseif (UNIX)
-      if(CYCOOP){
-         message(STATUS "Cycoop detected")
-         add_executable(
-            ${name}
-            ${name}.cpp
-            host/linux/skia_app.cpp
-            print_elapsed.cpp
-            cycoop/CycObject.cpp
-            cycoop/CycShape.cpp
-         )   
-      }
-      else{
-         add_executable(
-            ${name}
-            ${name}.cpp
-            host/linux/skia_app.cpp
-            print_elapsed.cpp
-         )   
-      }
+
+      add_executable(
+         ${name}
+         ${name}.cpp
+         host/linux/skia_app.cpp
+         print_elapsed.cpp
+         cycoop/CycShape.cpp
+         cycoop/CycObject.cpp
+      )
 
       target_link_libraries(
          ${name}

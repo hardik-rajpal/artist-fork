@@ -26,8 +26,8 @@ constexpr int total = w;
 constexpr float radius = 10;
  float posx = 100;
  float posy = 100;
-int velx = 5;
-int vely = 5;
+int velx[5];
+int vely[5];
 constexpr auto accelleration = 0.05;
 auto repaint_color = rgb(0,0,0);
 constexpr auto portion = 360.0f/total;
@@ -35,7 +35,7 @@ auto balls = image{ "src.png" };
 float dots[total];
 float dots_vel[total];
 float opacity = 1.0;
-CycCircle *ball;
+CycCircle *ball[5];
 float random_size()
 {
    return float(std::rand()) / (RAND_MAX);
@@ -61,13 +61,15 @@ void rain(canvas& cnv)
    // cnv.fill_style(colors::blue_violet);
    // cnv.fill();
    // cnv.stroke();
-   ball->update(cnv);
-   posx+=velx;
-   posy+=vely;
-   if(posx>window_size.x){velx=-velx;posx=window_size.x-1;}
-   else if(posx<0){posx=1;velx=-velx;}
-   if(posy>window_size.y){vely=-vely;posy=window_size.y-1;}
-   else if(posy<0){posy=1;vely=-vely;}
+   for(int i=0;i<5;i++){
+      ball[i]->update(cnv);
+      ball[i]->moveBy(velx[i],vely[i]);
+      if(ball[i]->cx>window_size.x){velx[i]=-velx[i];ball[i]->cx=window_size.x-1;}
+      else if(ball[i]->cx<0){ball[i]->cx=1;velx[i]=-velx[i];}
+      if(ball[i]->cy>window_size.y){vely[i]=-vely[i];ball[i]->cy=window_size.y-1;}
+      else if(ball[i]->cy<0){ball[i]->cy=1;vely[i]=-vely[i];}
+
+   }
    print_elapsed(cnv, window_size, colors::black.opacity(0.1),colors::white.opacity(1));
 }
 
@@ -92,7 +94,10 @@ void init()
       dots[i] = h;
       dots_vel[i] = 10;
    }
-   ball = new CycCircle(posx,posy,radius);
+   for(int i=0;i<5;i++){
+      velx[i]=5;vely[i]=5;
+   ball[i] = new CycCircle(posx+(rand()%10)*10*i,posy-(rand()%10)*10*i,radius,cycfi::artist::colors::blue_violet,cycfi::artist::colors::sea_green);
+   }
 }
 
 int main(int argc, char const* argv[])
