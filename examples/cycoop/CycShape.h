@@ -9,6 +9,8 @@ class CycShape:public CycObject{
     art::color strokeColor = art::colors::black;
     CycShape(float cx, float cy);
     CycShape(float cx, float cy, art::color fillColor,art::color strokeColor);
+    fill(art::color fillColor);
+    stroke(art::color strokeColor);
 };
 
 class CycCircle:public CycShape{
@@ -17,5 +19,13 @@ class CycCircle:public CycShape{
     void render(art::canvas &cnv);
     CycCircle(float cx, float cy, float radius,art::color fillColor,art::color strokeColor);
     CycCircle(float cx, float cy, float radius);
+};
+class CycRect:public CycShape{
+    public:
+    float width;
+    float height;
+    void render(art::canvas &cnv);
+    CycRect(float cx, float cy, float width, float height);
+    CycRect(float cx, float cy, float width, float height,art::color fillColor,art::color strokeColor);
 };
 #endif
