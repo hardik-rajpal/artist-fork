@@ -7,7 +7,7 @@
 #include <cstdlib>
 #include<vector>
 using namespace cycfi::artist;
-
+#include"cycoop/CycShape.h"
 ///////////////////////////////////////////////////////////////////////////////
 // Ported from Rainbow Rain animation:
 // https://onaircode.com/awesome-html5-canvas-examples-source-code/
@@ -35,7 +35,7 @@ auto balls = image{ "src.png" };
 float dots[total];
 float dots_vel[total];
 float opacity = 1.0;
-
+CycCircle *ball;
 float random_size()
 {
    return float(std::rand()) / (RAND_MAX);
@@ -55,12 +55,13 @@ void rain(canvas& cnv)
    cnv.fill_style(repaint_color);
    cnv.fill_rect({ 0, 0, window_size });
 
-   cnv.draw(balls,posx,posy);
+   // cnv.draw(balls,posx,posy);
    
    // cnv.arc(point(posx,posy),radius,0.0f,360.0f);
    // cnv.fill_style(colors::blue_violet);
    // cnv.fill();
    // cnv.stroke();
+   ball->update(cnv);
    posx+=velx;
    posy+=vely;
    if(posx>window_size.x){velx=-velx;posx=window_size.x-1;}
@@ -91,6 +92,7 @@ void init()
       dots[i] = h;
       dots_vel[i] = 10;
    }
+   ball = new CycCircle(posx,posy,radius);
 }
 
 int main(int argc, char const* argv[])
