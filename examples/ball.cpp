@@ -31,7 +31,7 @@ int vely = 5;
 constexpr auto accelleration = 0.05;
 auto repaint_color = rgb(0,0,0);
 constexpr auto portion = 360.0f/total;
-
+auto balls = image{ "src.png" };
 float dots[total];
 float dots_vel[total];
 float opacity = 1.0;
@@ -50,16 +50,17 @@ void rain(canvas& cnv)
    // colorList.push_back(colors::blue_violet);colorList.push_back(colors::sky_blue);colorList.push_back(colors::sea_green);
    // colorList.push_back(colors::lavender);
    // repaint_color=colorList[rand()%colorList.size()].opacity(1);
+
+
    cnv.fill_style(repaint_color);
    cnv.fill_rect({ 0, 0, window_size });
-   //done
-   // cnv.fill_color(colors::blue);
-   // cnv.fill_rect({ 0, 0, 100,100 });
-   // cnv.add_circle()
-   cnv.arc(point(posx,posy),radius,0.0f,360.0f);
-   cnv.fill_style(colors::blue_violet);
-   cnv.fill();
-   cnv.stroke();
+
+   cnv.draw(balls,posx,posy);
+   
+   // cnv.arc(point(posx,posy),radius,0.0f,360.0f);
+   // cnv.fill_style(colors::blue_violet);
+   // cnv.fill();
+   // cnv.stroke();
    posx+=velx;
    posy+=vely;
    if(posx>window_size.x){velx=-velx;posx=window_size.x-1;}
