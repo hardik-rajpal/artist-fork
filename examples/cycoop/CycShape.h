@@ -7,10 +7,12 @@ class CycShape:public CycObject{
     public:
     art::color fillColor = art::colors::white;
     art::color strokeColor = art::colors::black;
+    float strokeWidth=10;
     CycShape(float cx, float cy);
     CycShape(float cx, float cy, art::color fillColor,art::color strokeColor);
-    fill(art::color fillColor);
-    stroke(art::color strokeColor);
+    void fill(art::color fillColor);
+    void stroke(art::color strokeColor);
+    void setStrokeWidth(float strokeWidth);
 };
 
 class CycCircle:public CycShape{

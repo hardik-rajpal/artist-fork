@@ -36,6 +36,7 @@ float dots[total];
 float dots_vel[total];
 float opacity = 1.0;
 CycCircle *ball[5];
+CycRect *myrect;
 float random_size()
 {
    return float(std::rand()) / (RAND_MAX);
@@ -43,31 +44,36 @@ float random_size()
 
 void rain(canvas& cnv)
 {
-   //do: repaint the canvas as repaint_color
-   // std::vector<cycfi::artist::color> colorList;
-   // colorList.push_back(colors::indian_red);colorList.push_back(colors::alice_blue);colorList.push_back(colors::aquamarine);
-   // colorList.push_back(colors::azure);colorList.push_back(colors::bisque);colorList.push_back(colors::blanched_almond);
-   // colorList.push_back(colors::blue_violet);colorList.push_back(colors::sky_blue);colorList.push_back(colors::sea_green);
-   // colorList.push_back(colors::lavender);
-   // repaint_color=colorList[rand()%colorList.size()].opacity(1);
-
-
    cnv.fill_style(repaint_color);
    cnv.fill_rect({ 0, 0, window_size });
-
-   // cnv.draw(balls,posx,posy);
-   
-   // cnv.arc(point(posx,posy),radius,0.0f,360.0f);
-   // cnv.fill_style(colors::blue_violet);
-   // cnv.fill();
-   // cnv.stroke();
+   myrect->update(cnv);
+   myrect->moveBy(1,1);
    for(int i=0;i<5;i++){
       ball[i]->update(cnv);
       ball[i]->moveBy(velx[i],vely[i]);
-      if(ball[i]->cx>window_size.x){velx[i]=-velx[i];ball[i]->cx=window_size.x-1;}
-      else if(ball[i]->cx<0){ball[i]->cx=1;velx[i]=-velx[i];}
-      if(ball[i]->cy>window_size.y){vely[i]=-vely[i];ball[i]->cy=window_size.y-1;}
-      else if(ball[i]->cy<0){ball[i]->cy=1;vely[i]=-vely[i];}
+      if(ball[i]->cx>window_size.x){
+         velx[i]=-velx[i];ball[i]->cx=window_size.x-1;
+         ball[i]->fill(colors::green);
+         ball[i]->stroke(colors::yellow);
+      }
+      else if(ball[i]->cx<0){
+         ball[i]->cx=1;velx[i]=-velx[i];
+         ball[i]->fill(colors::red);
+         ball[i]->stroke(colors::yellow);
+
+      }
+      if(ball[i]->cy>window_size.y){
+         vely[i]=-vely[i];ball[i]->cy=window_size.y-1;
+         ball[i]->fill(colors::green);
+         ball[i]->stroke(colors::yellow);
+
+      }
+      else if(ball[i]->cy<0){
+         ball[i]->cy=1;vely[i]=-vely[i];
+         ball[i]->fill(colors::red);
+         ball[i]->stroke(colors::yellow);
+
+      }
 
    }
    print_elapsed(cnv, window_size, colors::black.opacity(0.1),colors::white.opacity(1));
@@ -98,6 +104,9 @@ void init()
       velx[i]=5;vely[i]=5;
    ball[i] = new CycCircle(posx+(rand()%10)*10*i,posy-(rand()%10)*10*i,radius,cycfi::artist::colors::blue_violet,cycfi::artist::colors::sea_green);
    }
+   myrect = new CycRect(5,5,50, 50);
+   myrect->fill(colors::pink);
+   myrect->stroke(colors::red);
 }
 
 int main(int argc, char const* argv[])
