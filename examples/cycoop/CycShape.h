@@ -2,6 +2,7 @@
 #define CYCSHAPE_H
 #include"CycObject.h"
 #include<artist/color.hpp>
+
 namespace art = cycfi::artist;
 class CycShape:public CycObject{
     public:
@@ -14,7 +15,6 @@ class CycShape:public CycObject{
     void stroke(art::color strokeColor);
     void setStrokeWidth(float strokeWidth);
 };
-
 class CycCircle:public CycShape{
     public:
     float radius;
@@ -29,5 +29,12 @@ class CycRect:public CycShape{
     void render(art::canvas &cnv);
     CycRect(float cx, float cy, float width, float height);
     CycRect(float cx, float cy, float width, float height,art::color fillColor,art::color strokeColor);
+};
+class CycPoly:public CycShape{
+    public:
+    int numsides;
+    float radius;
+    void render(art::canvas &cnv);
+    CycPoly(float cx, float cy, float radius, int numsides);
 };
 #endif

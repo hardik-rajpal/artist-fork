@@ -44,3 +44,10 @@ void CycRect::render(art::canvas &cnv){
     cnv.fill();
     cnv.stroke();
 }
+CycPoly::CycPoly(float cx, float cy, float radius, int numsides):CycShape(cx, cy){
+    this->radius = radius;
+    this->numsides = numsides;
+}
+void CycPoly::render(art::canvas &cnv){
+    
+}
