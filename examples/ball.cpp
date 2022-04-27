@@ -6,6 +6,8 @@
 #include "app.hpp"
 #include <cstdlib>
 #include<vector>
+#include<iostream>
+#include<thread>
 using namespace cycfi::artist;
 #include"cycoop/CycShape.h"
 ///////////////////////////////////////////////////////////////////////////////
@@ -37,6 +39,7 @@ float dots_vel[total];
 float opacity = 1.0;
 CycCircle *ball[5];
 CycRect *myrect;
+int numRuns = 0;
 float random_size()
 {
    return float(std::rand()) / (RAND_MAX);
@@ -81,8 +84,13 @@ void rain(canvas& cnv)
 
 void draw(canvas& cnv)
 {  
+   numRuns+=1;
+   if(numRuns>1){return;}
+
    //draw must be a repeatedly called function.
    //it calls rain only once and rain moves all drops only once.
+   // int k = 1000;
+   // while(k--){
    static auto offscreen = image{ window_size };
    {
       auto ctx = offscreen_image{ offscreen };
@@ -90,6 +98,8 @@ void draw(canvas& cnv)
       rain(offscreen_cnv);
    }
    cnv.draw(offscreen);
+   // std::cout<<k<<std::endl;
+   // }
 }
 
 void init()
@@ -108,10 +118,14 @@ void init()
    myrect->fill(colors::pink);
    myrect->stroke(colors::red);
 }
-
+void picasso(){
+   
+}
 int main(int argc, char const* argv[])
 {
    init();
-   return run_app(argc, argv, window_size, colors::gray[10], true);
+   std::thread t1(picasso);
+   run_app(argc, argv, window_size, colors::gray[10], true);
+   std::cout<<"here"<<std::endl;
 }
 

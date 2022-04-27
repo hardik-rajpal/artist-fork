@@ -4,7 +4,7 @@
    Distributed under the MIT License [ https://opensource.org/licenses/MIT ]
 =============================================================================*/
 #include "app.hpp"
-
+#include<iostream>
 using namespace cycfi::artist;
 using cycfi::pi;
 auto constexpr window_size = point{ 640.0f, 480.0f };
@@ -297,7 +297,7 @@ void radial_gradient(canvas& cnv)
    cnv.fill_style(gr);
    cnv.fill();
 }
-
+int i=0;
 void draw(canvas& cnv)
 {
    background(cnv);
@@ -310,6 +310,7 @@ void draw(canvas& cnv)
    quad(cnv);
    linear_gradient(cnv);
    radial_gradient(cnv);
+   std::cout<<i++<<std::endl;
 }
 
 int main(int argc, char const* argv[])

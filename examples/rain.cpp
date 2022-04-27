@@ -54,7 +54,7 @@ void rain(canvas& cnv)
       auto current_y = dots[i] - 1;
       dots[i] += dots_vel[i] += accelleration;
       // cnv.fill_style(hsl(portion * i, 0.8, 0.5));
-      cnv.fill_style(rgb(portion * i, 0, portion*(total/2)).opacity(opacity));
+      cnv.fill_style(rgb(portion * i, 0, portion*(total/2)));
       cnv.fill_rect({
          float(i)
          , current_y

@@ -120,6 +120,7 @@ function(add_example name)
          ${name}
          PkgConfig::gtk3
          OpenGL::GL
+         pthread
       )
 
    endif()

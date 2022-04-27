@@ -13,7 +13,7 @@
 #include "SkImage.h"
 #include "SkSurface.h"
 #include <chrono>
-
+#include<iostream>
 using namespace cycfi::artist;
 float elapsed_ = 0;  // rendering elapsed time
 
@@ -26,7 +26,7 @@ namespace
       bool     _animate = false;
       color    _bkd = colors::white;
       guint    _timer_id = 0;
-
+//introduce objects array here.
       sk_sp<const GrGLInterface> _xface;
       sk_sp<GrContext>           _ctx;
       sk_sp<SkSurface>           _surface;
@@ -174,12 +174,19 @@ int run_app(
    state._size = window_size;
    state._animate = animate;
    state._bkd = background_color;
+   std::cout<<__LINE__<<std::endl;
 
    auto* app = gtk_application_new("org.gtk-skia.example", G_APPLICATION_FLAGS_NONE);
-   g_signal_connect(app, "activate", G_CALLBACK(activate), &state);
-   int status = g_application_run(G_APPLICATION(app), argc, const_cast<char**>(argv));
-   g_object_unref(app);
+   std::cout<<__LINE__<<std::endl;
 
+   g_signal_connect(app, "activate", G_CALLBACK(activate), &state);
+   std::cout<<__LINE__<<std::endl;
+   //blocking call to g_application_Run.
+   int status = g_application_run(G_APPLICATION(app), argc, const_cast<char**>(argv));
+   std::cout<<__LINE__<<std::endl;
+
+   g_object_unref(app);
+   std::cout<<__LINE__<<std::endl;
    return status;
 }
 
