@@ -14,6 +14,8 @@
 #include "SkSurface.h"
 #include <chrono>
 #include<iostream>
+#include "cycoop/CycObject.h"
+#include<vector>
 using namespace cycfi::artist;
 float elapsed_ = 0;  // rendering elapsed time
 
@@ -27,6 +29,7 @@ namespace
       color    _bkd = colors::white;
       guint    _timer_id = 0;
 //introduce objects array here.
+      std::vector<CycObject*> objects = {};
       sk_sp<const GrGLInterface> _xface;
       sk_sp<GrContext>           _ctx;
       sk_sp<SkSurface>           _surface;

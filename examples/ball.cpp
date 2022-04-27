@@ -9,7 +9,7 @@
 #include<iostream>
 #include<thread>
 using namespace cycfi::artist;
-#include"cycoop/CycShape.h"
+#include"host/linux/cycoop/CycShape.h"
 ///////////////////////////////////////////////////////////////////////////////
 // Ported from Rainbow Rain animation:
 // https://onaircode.com/awesome-html5-canvas-examples-source-code/
@@ -119,7 +119,7 @@ void init()
    myrect->stroke(colors::red);
 }
 void picasso(){
-   
+
 }
 int main(int argc, char const* argv[])
 {
