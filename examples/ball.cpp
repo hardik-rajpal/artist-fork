@@ -33,27 +33,19 @@ constexpr float radius = 10;
  float posy = 100;
 int velx[5];
 int vely[5];
-constexpr auto accelleration = 0.05;
-auto repaint_color = rgb(0,0,0);
-constexpr auto portion = 360.0f/total;
-auto balls = image{ "src.png" };
 float opacity = 1.0;
 CycCircle *ball[5];
 CycRect *myrect;
 int numRuns = 0;
-float random_size()
-{
-   return float(std::rand()) / (RAND_MAX);
-}
 int main(int argc, char const* argv[])
 {
    CycCanvas c(argc, argv, window_size,colors::gray[10]);   
    srand(0);
    for(int i=0;i<5;i++){
       velx[i]=5;vely[i]=5;
-      ball[i] = new CycCircle(c.objects,posx+(rand()%10)*10*i,posy-(rand()%10)*10*i,radius,cycfi::artist::colors::blue_violet,cycfi::artist::colors::sea_green);
+      ball[i] = new CycCircle(c,posx+(rand()%10)*10*i,posy-(rand()%10)*10*i,radius,cycfi::artist::colors::blue_violet,cycfi::artist::colors::sea_green);
    }
-   myrect = new CycRect(c.objects,5,5,50, 50);
+   myrect = new CycRect(c,5,5,50, 50);
    myrect->fill(colors::pink);
    myrect->stroke(colors::red);
    

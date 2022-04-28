@@ -1,8 +1,8 @@
 #include"CycShape.h"
 
-CycShape::CycShape(std::vector<CycObject*> &objectList,float cx, float cy):CycObject(cx,cy,objectList){}
+CycShape::CycShape(CycCanvas &cyccnv,float cx, float cy):CycObject(cx,cy,cyccnv){}
 
-CycShape::CycShape(std::vector<CycObject*> &objectList,float cx, float cy, cycfi::artist::color fillColor,cycfi::artist::color strokeColor):CycObject(cx,cy,objectList){
+CycShape::CycShape(CycCanvas &cyccnv,float cx, float cy, cycfi::artist::color fillColor,cycfi::artist::color strokeColor):CycObject(cx,cy,cyccnv){
     this->fillColor=fillColor;
     this->strokeColor=strokeColor;
 }
@@ -15,10 +15,10 @@ void CycShape::stroke(art::color strokeColor){
 void CycShape::setStrokeWidth(float strokeWidth){
     this->strokeWidth=strokeWidth;
 }
-CycCircle::CycCircle(std::vector<CycObject*> &objectList,float cx, float cy, float radius,art::color fillColor,art::color strokeColor):CycShape(objectList,cx,cy, fillColor,strokeColor){
+CycCircle::CycCircle(CycCanvas &cyccnv,float cx, float cy, float radius,art::color fillColor,art::color strokeColor):CycShape(cyccnv,cx,cy, fillColor,strokeColor){
     this->radius = radius;
 }
-CycCircle::CycCircle(std::vector<CycObject*> &objectList,float cx, float cy, float radius):CycShape(objectList,cx,cy){
+CycCircle::CycCircle(CycCanvas &cyccnv,float cx, float cy, float radius):CycShape(cyccnv,cx,cy){
     this->radius = radius;
 }
 void CycCircle::render(art::canvas &cnv){
@@ -30,7 +30,7 @@ void CycCircle::render(art::canvas &cnv){
     cnv.arc(this->cx, this->cy,radius,0.0f,360.0f,false);
     cnv.stroke();
 }
-CycRect::CycRect(std::vector<CycObject*> &objectList,float cx, float cy, float width, float height):CycShape(objectList,cx, cy){
+CycRect::CycRect(CycCanvas &cyccnv,float cx, float cy, float width, float height):CycShape(cyccnv,cx, cy){
     this->width = width;this->height = height;
 }
 void CycRect::render(art::canvas &cnv){
@@ -44,7 +44,7 @@ void CycRect::render(art::canvas &cnv){
     cnv.fill();
     cnv.stroke();
 }
-CycPoly::CycPoly(std::vector<CycObject*> &objectList,float cx, float cy, float radius, int numsides):CycShape(objectList,cx, cy){
+CycPoly::CycPoly(CycCanvas &cyccnv,float cx, float cy, float radius, int numsides):CycShape(cyccnv,cx, cy){
     this->radius = radius;
     this->numsides = numsides;
 }

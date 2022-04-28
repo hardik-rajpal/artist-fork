@@ -6,6 +6,7 @@
 #include<thread>
 #include"CycObject.h"
 #include<vector>
+class CycObject;
 class CycCanvas{
     public:
     std::vector<CycObject*> objects = {};
