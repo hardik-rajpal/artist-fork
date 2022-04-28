@@ -114,6 +114,8 @@ function(add_example name)
          print_elapsed.cpp
          host/linux/cycoop/CycShape.cpp
          host/linux/cycoop/CycObject.cpp
+         host/linux/cycoop/CycCanvas.cpp
+
       )
 
       target_link_libraries(

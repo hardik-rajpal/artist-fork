@@ -70,6 +70,7 @@ void runner(int argc, char const* argv[], extent window_size, color background_c
 }
 int main(int argc, char const* argv[])
 {
+   
    srand(0);
    for(int i=0;i<5;i++){
       velx[i]=5;vely[i]=5;
