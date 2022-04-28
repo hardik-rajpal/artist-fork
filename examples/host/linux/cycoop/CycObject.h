@@ -10,7 +10,7 @@ class CycObject{
     public:
     bool isVis = true;
     float cx,cy;
-    CycObject(float cx, float cy, CycCanvas &cyccnv);
+    CycObject(CycCanvas &cyccnv,float cx, float cy);
     virtual void render(cycfi::artist::canvas &cnv)=0;
     void update(cycfi::artist::canvas &cnv);
     void move(float x, float y);

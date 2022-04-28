@@ -1,6 +1,6 @@
 #include"CycObject.h"
 using namespace std;
-CycObject::CycObject(float cx, float cy,CycCanvas &cyccnv){
+CycObject::CycObject(CycCanvas &cyccnv,float cx, float cy){
     this->cx=cx;
     this->cy=cy;
     cyccnv.objects.push_back(this);

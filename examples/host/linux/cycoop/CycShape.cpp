@@ -1,8 +1,8 @@
 #include"CycShape.h"
 
-CycShape::CycShape(CycCanvas &cyccnv,float cx, float cy):CycObject(cx,cy,cyccnv){}
+CycShape::CycShape(CycCanvas &cyccnv,float cx, float cy):CycObject(cyccnv,cx,cy){}
 
-CycShape::CycShape(CycCanvas &cyccnv,float cx, float cy, cycfi::artist::color fillColor,cycfi::artist::color strokeColor):CycObject(cx,cy,cyccnv){
+CycShape::CycShape(CycCanvas &cyccnv,float cx, float cy, cycfi::artist::color fillColor,cycfi::artist::color strokeColor):CycObject(cyccnv,cx,cy){
     this->fillColor=fillColor;
     this->strokeColor=strokeColor;
 }
