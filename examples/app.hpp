@@ -9,7 +9,8 @@
 #include <infra/support.hpp>
 #include <artist/canvas.hpp>
 #include <string>
-
+#include<vector>
+#include"host/linux/cycoop/CycObject.h"
 using cycfi::artist::canvas;
 using cycfi::artist::extent;
 using cycfi::artist::color;
@@ -22,6 +23,7 @@ int            run_app(
                   int argc
                 , char const* argv[]
                 , extent window_size
+                , std::vector<CycObject*> *objlist
                 , color background_color = colors::white
                 , bool animate = false
                );

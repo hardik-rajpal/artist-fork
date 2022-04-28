@@ -65,7 +65,7 @@ void draw(canvas& cnv)
 
 
 void runner(int argc, char const* argv[], extent window_size, color background_color = colors::white, bool animate = false){
-   globStatus = run_app(argc,argv,window_size,background_color,animate);
+   globStatus = run_app(argc,argv,window_size,&objects,background_color,animate);
 
 }
 int main(int argc, char const* argv[])

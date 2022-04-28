@@ -29,7 +29,7 @@ namespace
       color    _bkd = colors::white;
       guint    _timer_id = 0;
 //introduce objects array here.
-      std::vector<CycObject*> objects = {};
+      std::vector<CycObject*> *objects;
       sk_sp<const GrGLInterface> _xface;
       sk_sp<GrContext>           _ctx;
       sk_sp<SkSurface>           _surface;
@@ -93,7 +93,18 @@ namespace
             auto cnv = canvas{ gpu_canvas };
             cnv.pre_scale(state._scale);
 
-            draw(cnv);
+            static auto offscreen = image{ state._size };
+            {
+               auto ctx = offscreen_image{ offscreen };
+               auto offscreen_cnv = canvas{ ctx.context() };
+               cnv.fill_style(state._bkd);
+               cnv.fill_rect({ 0, 0, state._size });
+               for(auto obj:*(state.objects)){
+                  obj->update(cnv);
+               }
+               print_elapsed(cnv, state._size, colors::black.opacity(0.1),colors::white.opacity(1));
+            }
+            cnv.draw(offscreen);
 
             gpu_canvas->restore();
             state._surface->flush();
@@ -169,6 +180,7 @@ int run_app(
    int argc
  , char const* argv[]
  , extent window_size
+ , std::vector<CycObject*> *objlist
  , color background_color
  , bool animate
 )
@@ -177,6 +189,7 @@ int run_app(
    state._size = window_size;
    state._animate = animate;
    state._bkd = background_color;
+   state.objects = objlist;
    std::cout<<__LINE__<<std::endl;
 
    auto* app = gtk_application_new("org.gtk-skia.example", G_APPLICATION_FLAGS_NONE);
