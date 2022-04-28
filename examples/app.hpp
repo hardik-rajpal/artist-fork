@@ -23,7 +23,7 @@ int            run_app(
                   int argc
                 , char const* argv[]
                 , extent window_size
-                , std::vector<CycObject*> *objlist
+                , CycCanvas* cyccnv
                 , color background_color = colors::white
                 , bool animate = false
                );

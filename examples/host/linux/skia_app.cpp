@@ -18,7 +18,6 @@
 #include<vector>
 using namespace cycfi::artist;
 float elapsed_ = 0;  // rendering elapsed time
-
 namespace
 {
    struct view_state
@@ -28,13 +27,22 @@ namespace
       bool     _animate = false;
       color    _bkd = colors::white;
       guint    _timer_id = 0;
-//introduce objects array here.
-      std::vector<CycObject*> *objects;
+      CycCanvas * cyccnv;
       sk_sp<const GrGLInterface> _xface;
       sk_sp<GrContext>           _ctx;
       sk_sp<SkSurface>           _surface;
    };
-
+   gboolean btn_press_callback(GtkWidget *btn, GdkEventButton *event, gpointer userdata)
+   {
+      view_state& state = *reinterpret_cast<view_state*>(userdata);
+      state.cyccnv->onClick(event->x,event->y,event->button);
+      return true;
+   }
+   gboolean my_keypress_function (GtkWidget *widget, GdkEventKey *event, gpointer userdata) {
+      view_state& state = *reinterpret_cast<view_state*>(userdata);
+      state.cyccnv->onKeyPress(event->keyval);
+      return FALSE;
+   }
    void close_window(GtkWidget*, gpointer user_data)
    {
       view_state& state = *reinterpret_cast<view_state*>(user_data);
@@ -99,7 +107,7 @@ namespace
                auto offscreen_cnv = canvas{ ctx.context() };
                cnv.fill_style(state._bkd);
                cnv.fill_rect({ 0, 0, state._size });
-               for(auto obj:*(state.objects)){
+               for(auto obj:(state.cyccnv->objects)){
                   obj->update(cnv);
                }
                print_elapsed(cnv, state._size, colors::black.opacity(0.1),colors::white.opacity(1));
@@ -148,7 +156,8 @@ namespace
 
       g_signal_connect(gl_area, "render", G_CALLBACK(render), user_data);
       g_signal_connect(gl_area, "realize", G_CALLBACK(realize), user_data);
-
+      g_signal_connect(window, "button-press-event", G_CALLBACK(btn_press_callback),user_data);
+      g_signal_connect(G_OBJECT (window), "key_press_event",G_CALLBACK (my_keypress_function), user_data);
       gtk_window_resize(GTK_WINDOW(window), state._size.x, state._size.y);
       gtk_widget_show_all(window);
 
@@ -180,7 +189,7 @@ int run_app(
    int argc
  , char const* argv[]
  , extent window_size
- , std::vector<CycObject*> *objlist
+ , CycCanvas* cyccnv
  , color background_color
  , bool animate
 )
@@ -189,7 +198,7 @@ int run_app(
    state._size = window_size;
    state._animate = animate;
    state._bkd = background_color;
-   state.objects = objlist;
+   state.cyccnv = cyccnv;
    std::cout<<__LINE__<<std::endl;
 
    auto* app = gtk_application_new("org.gtk-skia.example", G_APPLICATION_FLAGS_NONE);
