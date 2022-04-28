@@ -35,12 +35,12 @@ namespace
    gboolean btn_press_callback(GtkWidget *btn, GdkEventButton *event, gpointer userdata)
    {
       view_state& state = *reinterpret_cast<view_state*>(userdata);
-      state.cyccnv->onClick(event->x,event->y,event->button);
+      state.cyccnv->click(event->x,event->y,event->button);
       return true;
    }
    gboolean my_keypress_function (GtkWidget *widget, GdkEventKey *event, gpointer userdata) {
       view_state& state = *reinterpret_cast<view_state*>(userdata);
-      state.cyccnv->onKeyPress(event->keyval);
+      state.cyccnv->keyPress(event->keyval);
       return FALSE;
    }
    void close_window(GtkWidget*, gpointer user_data)

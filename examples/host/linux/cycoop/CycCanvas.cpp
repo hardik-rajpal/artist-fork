@@ -5,11 +5,26 @@
 CycCanvas::CycCanvas(int argc, char const* argv[], cycfi::artist::extent window_size, cycfi::artist::color background_color){
    t1 =  new std::thread(runner,this,argc,argv,window_size,colors::gray[10],true);
 }
-void CycCanvas::onClick(float x, float y, int type){
-   std::cout<<"clicked"<<std::endl;
+void CycCanvas::click(float x, float y, int type){
+   if(onClick!=NULL){
+      onClick(x,y,type);
+   }
+   for(auto obj:objects){
+      if(obj->inRange(x,y)&&obj->onClick!=NULL){
+         obj->onClick(x,y,type);
+      }
+   }
 }
-void CycCanvas::onKeyPress(int keyval){
+void CycCanvas::keyPress(int keyval){
+   if(onKeyPress!=NULL){
+      onKeyPress(keyval);
+   }
    std::cout<<"Key pressed"<<std::endl;
+   for(auto obj:objects){
+      if(obj->onKeyPress!=NULL){
+         obj->onKeyPress(keyval);
+      }
+   }
 };
 
 CycCanvas::~CycCanvas(){

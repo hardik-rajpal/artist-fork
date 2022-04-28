@@ -30,6 +30,9 @@ void CycCircle::render(art::canvas &cnv){
     cnv.arc(this->cx, this->cy,radius,0.0f,360.0f,false);
     cnv.stroke();
 }
+bool CycCircle::inRange(float x, float y){
+    return sqrt((x-cx)*(x-cx)+(y-cy)*(y-cy))<(radius+strokeWidth);
+}
 CycRect::CycRect(CycCanvas &cyccnv,float cx, float cy, float width, float height):CycShape(cyccnv,cx, cy){
     this->width = width;this->height = height;
 }
@@ -43,6 +46,9 @@ void CycRect::render(art::canvas &cnv){
     cnv.fill_rect(tx,ty, width,height);
     cnv.fill();
     cnv.stroke();
+}
+bool CycRect::inRange(float x, float y){
+    return (abs(cx-x)<(width+strokeWidth)/2)&&(abs(y-cy)<(height+strokeWidth)/2);
 }
 CycPoly::CycPoly(CycCanvas &cyccnv,float cx, float cy, float radius, int numsides):CycShape(cyccnv,cx, cy){
     this->radius = radius;

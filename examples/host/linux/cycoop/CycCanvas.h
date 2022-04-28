@@ -12,9 +12,11 @@ class CycCanvas{
     std::vector<CycObject*> objects = {};
     int globStatus = -1;
     std::thread * t1;
+    std::function<void(float x, float y, int type)> onClick=NULL;
+    std::function<void(int type)> onKeyPress=NULL;
     CycCanvas(int argc, char const* argv[], cycfi::artist::extent window_size, cycfi::artist::color background_color);
-    void onClick(float x, float y, int type);
-    void onKeyPress(int keyval);
+    void click(float x, float y, int type);
+    void keyPress(int keyval);
     ~CycCanvas();
 };
 void runner(CycCanvas *cyccnv,int argc, char const* argv[], cycfi::artist::extent window_size, cycfi::artist::color background_color = cycfi::artist::colors::white, bool animate = false);

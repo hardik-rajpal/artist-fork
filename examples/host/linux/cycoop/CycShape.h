@@ -19,6 +19,7 @@ class CycCircle:public CycShape{
     public:
     float radius;
     void render(art::canvas &cnv);
+    bool inRange(float x, float y);
     CycCircle(CycCanvas &cyccnv,float cx, float cy, float radius,art::color fillColor,art::color strokeColor);
     CycCircle(CycCanvas &cyccnv,float cx, float cy, float radius);
 };
@@ -27,6 +28,7 @@ class CycRect:public CycShape{
     float width;
     float height;
     void render(art::canvas &cnv);
+    bool inRange(float x, float y);
     CycRect(CycCanvas &cyccnv,float cx, float cy, float width, float height);
     CycRect(CycCanvas &cyccnv,float cx, float cy, float width, float height,art::color fillColor,art::color strokeColor);
 };
