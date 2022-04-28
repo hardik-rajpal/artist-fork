@@ -11,6 +11,8 @@
 #include<thread>
 using namespace cycfi::artist;
 #include"host/linux/cycoop/CycShape.h"
+#include"host/linux/cycoop/CycCanvas.h"
+
 ///////////////////////////////////////////////////////////////////////////////
 // Ported from Rainbow Rain animation:
 // https://onaircode.com/awesome-html5-canvas-examples-source-code/
@@ -21,7 +23,6 @@ constexpr auto persistence = 0.10;
 #else
 constexpr auto persistence = 0.04;
 #endif
-std::vector<CycObject*> objects = {};
 constexpr auto window_size = extent{ 640, 360 };
 constexpr auto w = window_size.x;
 constexpr auto h = window_size.y;
@@ -44,45 +45,20 @@ float random_size()
 {
    return float(std::rand()) / (RAND_MAX);
 }
-
-
-void draw(canvas& cnv)
-{  
-   static auto offscreen = image{ window_size };
-   {
-      auto ctx = offscreen_image{ offscreen };
-      auto offscreen_cnv = canvas{ ctx.context() };
-      cnv.fill_style(repaint_color);
-      cnv.fill_rect({ 0, 0, window_size });
-      for(auto obj:objects){
-         obj->update(cnv);
-      }
-      print_elapsed(cnv, window_size, colors::black.opacity(0.1),colors::white.opacity(1));
-   }
-   cnv.draw(offscreen);
-
-}
-
-
-void runner(int argc, char const* argv[], extent window_size, color background_color = colors::white, bool animate = false){
-   globStatus = run_app(argc,argv,window_size,&objects,background_color,animate);
-
-}
 int main(int argc, char const* argv[])
 {
-   
+   CycCanvas c(argc, argv, window_size,colors::gray[10]);   
    srand(0);
    for(int i=0;i<5;i++){
       velx[i]=5;vely[i]=5;
-      ball[i] = new CycCircle(objects,posx+(rand()%10)*10*i,posy-(rand()%10)*10*i,radius,cycfi::artist::colors::blue_violet,cycfi::artist::colors::sea_green);
+      ball[i] = new CycCircle(c.objects,posx+(rand()%10)*10*i,posy-(rand()%10)*10*i,radius,cycfi::artist::colors::blue_violet,cycfi::artist::colors::sea_green);
    }
-   myrect = new CycRect(objects,5,5,50, 50);
+   myrect = new CycRect(c.objects,5,5,50, 50);
    myrect->fill(colors::pink);
    myrect->stroke(colors::red);
    
-   std::thread t1(runner,argc,argv,window_size,colors::gray[10],true);
-   std::cout<<"here"<<std::endl;
-   while(globStatus!=0){
+
+   while(c.globStatus!=0){
       usleep(50000);
       myrect->moveBy(1,1);
       for(int i=0;i<5;i++){
@@ -110,7 +86,5 @@ int main(int argc, char const* argv[])
       }
 
    }
-   
-   t1.join();
 }
 
