@@ -6,6 +6,7 @@
 #include "app.hpp"
 #include <cstdlib>
 #include<vector>
+#include<unistd.h>
 #include<iostream>
 #include<thread>
 using namespace cycfi::artist;
@@ -20,11 +21,12 @@ constexpr auto persistence = 0.10;
 #else
 constexpr auto persistence = 0.04;
 #endif
-
+std::vector<CycObject*> objects = {};
 constexpr auto window_size = extent{ 640, 360 };
 constexpr auto w = window_size.x;
 constexpr auto h = window_size.y;
 constexpr int total = w;
+int globStatus = -1;
 constexpr float radius = 10;
  float posx = 100;
  float posy = 100;
@@ -34,8 +36,6 @@ constexpr auto accelleration = 0.05;
 auto repaint_color = rgb(0,0,0);
 constexpr auto portion = 360.0f/total;
 auto balls = image{ "src.png" };
-float dots[total];
-float dots_vel[total];
 float opacity = 1.0;
 CycCircle *ball[5];
 CycRect *myrect;
@@ -45,87 +45,71 @@ float random_size()
    return float(std::rand()) / (RAND_MAX);
 }
 
-void rain(canvas& cnv)
-{
-   cnv.fill_style(repaint_color);
-   cnv.fill_rect({ 0, 0, window_size });
-   myrect->update(cnv);
-   myrect->moveBy(1,1);
-   for(int i=0;i<5;i++){
-      ball[i]->update(cnv);
-      ball[i]->moveBy(velx[i],vely[i]);
-      if(ball[i]->cx>window_size.x){
-         velx[i]=-velx[i];ball[i]->cx=window_size.x-1;
-         ball[i]->fill(colors::green);
-         ball[i]->stroke(colors::yellow);
-      }
-      else if(ball[i]->cx<0){
-         ball[i]->cx=1;velx[i]=-velx[i];
-         ball[i]->fill(colors::red);
-         ball[i]->stroke(colors::yellow);
-
-      }
-      if(ball[i]->cy>window_size.y){
-         vely[i]=-vely[i];ball[i]->cy=window_size.y-1;
-         ball[i]->fill(colors::green);
-         ball[i]->stroke(colors::yellow);
-
-      }
-      else if(ball[i]->cy<0){
-         ball[i]->cy=1;vely[i]=-vely[i];
-         ball[i]->fill(colors::red);
-         ball[i]->stroke(colors::yellow);
-
-      }
-
-   }
-   print_elapsed(cnv, window_size, colors::black.opacity(0.1),colors::white.opacity(1));
-}
 
 void draw(canvas& cnv)
 {  
-   numRuns+=1;
-   if(numRuns>1){return;}
-
-   //draw must be a repeatedly called function.
-   //it calls rain only once and rain moves all drops only once.
-   // int k = 1000;
-   // while(k--){
    static auto offscreen = image{ window_size };
    {
       auto ctx = offscreen_image{ offscreen };
       auto offscreen_cnv = canvas{ ctx.context() };
-      rain(offscreen_cnv);
+      cnv.fill_style(repaint_color);
+      cnv.fill_rect({ 0, 0, window_size });
+      for(auto obj:objects){
+         obj->update(cnv);
+      }
+      print_elapsed(cnv, window_size, colors::black.opacity(0.1),colors::white.opacity(1));
    }
    cnv.draw(offscreen);
-   // std::cout<<k<<std::endl;
-   // }
+
 }
 
-void init()
-{
-   srand(0);
-   for (auto i = 0; i < total; ++i)
-   {
-      dots[i] = h;
-      dots_vel[i] = 10;
-   }
-   for(int i=0;i<5;i++){
-      velx[i]=5;vely[i]=5;
-   ball[i] = new CycCircle(posx+(rand()%10)*10*i,posy-(rand()%10)*10*i,radius,cycfi::artist::colors::blue_violet,cycfi::artist::colors::sea_green);
-   }
-   myrect = new CycRect(5,5,50, 50);
-   myrect->fill(colors::pink);
-   myrect->stroke(colors::red);
-}
-void picasso(){
+
+void runner(int argc, char const* argv[], extent window_size, color background_color = colors::white, bool animate = false){
+   globStatus = run_app(argc,argv,window_size,background_color,animate);
 
 }
 int main(int argc, char const* argv[])
 {
-   init();
-   std::thread t1(picasso);
-   run_app(argc, argv, window_size, colors::gray[10], true);
+   srand(0);
+   for(int i=0;i<5;i++){
+      velx[i]=5;vely[i]=5;
+      ball[i] = new CycCircle(objects,posx+(rand()%10)*10*i,posy-(rand()%10)*10*i,radius,cycfi::artist::colors::blue_violet,cycfi::artist::colors::sea_green);
+   }
+   myrect = new CycRect(objects,5,5,50, 50);
+   myrect->fill(colors::pink);
+   myrect->stroke(colors::red);
+   
+   std::thread t1(runner,argc,argv,window_size,colors::gray[10],true);
    std::cout<<"here"<<std::endl;
+   while(globStatus!=0){
+      usleep(50000);
+      myrect->moveBy(1,1);
+      for(int i=0;i<5;i++){
+         ball[i]->moveBy(velx[i],vely[i]);
+         if(ball[i]->cx>window_size.x){
+            velx[i]=-velx[i];ball[i]->cx=window_size.x-1;
+            ball[i]->fill(colors::green);
+            ball[i]->stroke(colors::yellow);
+         }
+         else if(ball[i]->cx<0){
+            ball[i]->cx=1;velx[i]=-velx[i];
+            ball[i]->fill(colors::red);
+            ball[i]->stroke(colors::yellow);
+         }
+         if(ball[i]->cy>window_size.y){
+            vely[i]=-vely[i];ball[i]->cy=window_size.y-1;
+            ball[i]->fill(colors::green);
+            ball[i]->stroke(colors::yellow);
+         }
+         else if(ball[i]->cy<0){
+            ball[i]->cy=1;vely[i]=-vely[i];
+            ball[i]->fill(colors::red);
+            ball[i]->stroke(colors::yellow);
+         }
+      }
+
+   }
+   
+   t1.join();
 }
 

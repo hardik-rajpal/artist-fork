@@ -1,8 +1,9 @@
 #include"CycObject.h"
 using namespace std;
-CycObject::CycObject(float cx, float cy){
+CycObject::CycObject(float cx, float cy,std::vector<CycObject*> &objectList){
     this->cx=cx;
     this->cy=cy;
+    objectList.push_back(this);
 }
 void CycObject::setVis(bool isVis){
     this->isVis=isVis;

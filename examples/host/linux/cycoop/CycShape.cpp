@@ -1,8 +1,8 @@
 #include"CycShape.h"
 
-CycShape::CycShape(float cx, float cy):CycObject(cx,cy){}
+CycShape::CycShape(std::vector<CycObject*> &objectList,float cx, float cy):CycObject(cx,cy,objectList){}
 
-CycShape::CycShape(float cx, float cy, cycfi::artist::color fillColor,cycfi::artist::color strokeColor):CycObject(cx,cy){
+CycShape::CycShape(std::vector<CycObject*> &objectList,float cx, float cy, cycfi::artist::color fillColor,cycfi::artist::color strokeColor):CycObject(cx,cy,objectList){
     this->fillColor=fillColor;
     this->strokeColor=strokeColor;
 }
@@ -15,10 +15,10 @@ void CycShape::stroke(art::color strokeColor){
 void CycShape::setStrokeWidth(float strokeWidth){
     this->strokeWidth=strokeWidth;
 }
-CycCircle::CycCircle(float cx, float cy, float radius,art::color fillColor,art::color strokeColor):CycShape(cx,cy, fillColor,strokeColor){
+CycCircle::CycCircle(std::vector<CycObject*> &objectList,float cx, float cy, float radius,art::color fillColor,art::color strokeColor):CycShape(objectList,cx,cy, fillColor,strokeColor){
     this->radius = radius;
 }
-CycCircle::CycCircle(float cx, float cy, float radius):CycShape(cx,cy){
+CycCircle::CycCircle(std::vector<CycObject*> &objectList,float cx, float cy, float radius):CycShape(objectList,cx,cy){
     this->radius = radius;
 }
 void CycCircle::render(art::canvas &cnv){
@@ -30,7 +30,7 @@ void CycCircle::render(art::canvas &cnv){
     cnv.arc(this->cx, this->cy,radius,0.0f,360.0f,false);
     cnv.stroke();
 }
-CycRect::CycRect(float cx, float cy, float width, float height):CycShape(cx, cy){
+CycRect::CycRect(std::vector<CycObject*> &objectList,float cx, float cy, float width, float height):CycShape(objectList,cx, cy){
     this->width = width;this->height = height;
 }
 void CycRect::render(art::canvas &cnv){
@@ -44,7 +44,7 @@ void CycRect::render(art::canvas &cnv){
     cnv.fill();
     cnv.stroke();
 }
-CycPoly::CycPoly(float cx, float cy, float radius, int numsides):CycShape(cx, cy){
+CycPoly::CycPoly(std::vector<CycObject*> &objectList,float cx, float cy, float radius, int numsides):CycShape(objectList,cx, cy){
     this->radius = radius;
     this->numsides = numsides;
 }

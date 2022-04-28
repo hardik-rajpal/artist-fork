@@ -112,8 +112,8 @@ function(add_example name)
          ${name}.cpp
          host/linux/skia_app.cpp
          print_elapsed.cpp
-         cycoop/CycShape.cpp
-         cycoop/CycObject.cpp
+         host/linux/cycoop/CycShape.cpp
+         host/linux/cycoop/CycObject.cpp
       )
 
       target_link_libraries(
