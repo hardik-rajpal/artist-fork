@@ -51,7 +51,7 @@ int main(int argc, char const* argv[])
       }
    };
    while(c.globStatus!=0){
-      usleep(1000000);
+   usleep(1000000);
    }
    srand(0);
    
