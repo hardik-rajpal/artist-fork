@@ -4,7 +4,9 @@ CycObject::CycObject(CycCanvas &cyccnv,float cx, float cy){
     this->cx=cx;
     this->cy=cy;
     cyccnv.objects.push_back(this);
+    this->cyccnv = &cyccnv;
 }
+CycObject::CycObject(){};
 void CycObject::setVis(bool isVis){
     this->isVis=isVis;
 }

@@ -115,6 +115,8 @@ function(add_example name)
          host/linux/cycoop/CycShape.cpp
          host/linux/cycoop/CycObject.cpp
          host/linux/cycoop/CycCanvas.cpp
+         host/linux/cycoop/CycSprite.cpp
+
 
       )
 
@@ -155,6 +157,7 @@ set(composite_ops_images
 )
 set(ball_images
    ${CMAKE_CURRENT_LIST_DIR}/images/src.png
+   ${CMAKE_CURRENT_LIST_DIR}/images/dest.png
 )
 add_example(shapes)
 add_example(typography)

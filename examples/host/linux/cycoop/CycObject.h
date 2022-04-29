@@ -13,6 +13,7 @@ class CycObject{
     float cx,cy;
     std::function<void(float,float,int)> onClick=NULL;
     std::function<void(int)> onKeyPress=NULL;
+    CycCanvas *cyccnv;
     CycObject();
     CycObject(CycCanvas &cyccnv,float cx, float cy);
     virtual void render(cycfi::artist::canvas &cnv)=0;
