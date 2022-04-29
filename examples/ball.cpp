@@ -10,9 +10,7 @@
 #include<iostream>
 #include<thread>
 using namespace cycfi::artist;
-#include"host/linux/cycoop/CycShape.h"
-#include"host/linux/cycoop/CycCanvas.h"
-#include"host/linux/cycoop/CycSprite.h"
+#include"host/linux/cycoop/CycLib.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Ported from Rainbow Rain animation:
@@ -34,41 +32,26 @@ float opacity = 1.0;
 int numRuns = 0;
 int main(int argc, char const* argv[])
 {
-   std::vector<std::string> rnames = {},lnames={};
-   int numImages = 8;
-   for(int i=0;i<numImages;i++){
-      rnames.push_back(std::to_string(i)+"0.png");
-      lnames.push_back(std::to_string(i)+"1.png");
-   }
    CycCanvas c(argc, argv, window_size,colors::gray[10]);   
-   CycSprite s(c,rnames,50, 50);
-   s.startImageLoop(0,s.images.size()-1,100000);
-   int vx = 10;
-   while(c.globStatus!=0){
-      while(s.cx<window_size.x){
-         usleep(100000);
-         // std::cout<<s.cx<<" "<<window_size.x<<std::endl;
-         s.moveBy(vx,0);
-         if(s.cx+vx>window_size.x){
-            s.cx= window_size.x-1;
-            vx = -vx;
-            s.stopImageLoop(0);
-            s.resetImages(lnames);
-            s.startImageLoop(0,s.images.size()-1,100000);
-         }
-         else if(s.cx+vx<0){
-            s.cx = 1; 
-            vx = -vx;
-            s.stopImageLoop(0);
-            std::cout<<__LINE__<<std::endl;
-            s.resetImages(rnames);
-            std::cout<<__LINE__<<std::endl;
-            s.startImageLoop(0,s.images.size()-1,100000);
-            std::cout<<__LINE__<<std::endl;
-
-         }
+   CycText t(c,50,50,"nbc",50,cycfi::artist::colors::blue,cycfi::artist::colors::yellow);
+   c.onKeyPress = [&t](int keyval){
+      switch(keyval){
+         case 65361:
+            t.moveBy(0,-10);
+            break;
+         case 65362:
+            t.moveBy(10,0);
+            break;
+         case 65363:
+            t.moveBy(10,0);
+            break;
+         case 65364:
+            t.moveBy(0,10);
+            break;
       }
-
+   };
+   while(c.globStatus!=0){
+      usleep(1000000);
    }
    srand(0);
    

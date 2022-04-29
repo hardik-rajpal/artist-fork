@@ -9,3 +9,6 @@ void CycText::render(cycfi::artist::canvas &cnv){
     cnv.font(cycfi::artist::font_descr{"Open Sans", fontsz});
     cnv.fill_text(this->value,cx,cy);
 }
+bool CycText::inRange(float x, float y){
+    return true;
+}
