@@ -34,14 +34,41 @@ float opacity = 1.0;
 int numRuns = 0;
 int main(int argc, char const* argv[])
 {
-   
+   std::vector<std::string> rnames = {},lnames={};
+   int numImages = 8;
+   for(int i=0;i<numImages;i++){
+      rnames.push_back(std::to_string(i)+"0.png");
+      lnames.push_back(std::to_string(i)+"1.png");
+   }
    CycCanvas c(argc, argv, window_size,colors::gray[10]);   
-   // CycCanvas c2(argc, argv, window_size,colors::gray[10]);
-   CycSprite s(c,{"src.png","dest.png"},50, 50);
+   CycSprite s(c,rnames,50, 50);
+   s.startImageLoop(0,s.images.size()-1,100000);
+   int vx = 10;
    while(c.globStatus!=0){
-      s.nextImage();
-      usleep(500000);
-      // s.moveBy(-10,10);
+      while(s.cx<window_size.x){
+         usleep(100000);
+         // std::cout<<s.cx<<" "<<window_size.x<<std::endl;
+         s.moveBy(vx,0);
+         if(s.cx+vx>window_size.x){
+            s.cx= window_size.x-1;
+            vx = -vx;
+            s.stopImageLoop(0);
+            s.resetImages(lnames);
+            s.startImageLoop(0,s.images.size()-1,100000);
+         }
+         else if(s.cx+vx<0){
+            s.cx = 1; 
+            vx = -vx;
+            s.stopImageLoop(0);
+            std::cout<<__LINE__<<std::endl;
+            s.resetImages(rnames);
+            std::cout<<__LINE__<<std::endl;
+            s.startImageLoop(0,s.images.size()-1,100000);
+            std::cout<<__LINE__<<std::endl;
+
+         }
+      }
+
    }
    srand(0);
    

@@ -156,8 +156,10 @@ set(composite_ops_images
    ${CMAKE_CURRENT_LIST_DIR}/images/src.png
 )
 set(ball_images
-   ${CMAKE_CURRENT_LIST_DIR}/images/src.png
-   ${CMAKE_CURRENT_LIST_DIR}/images/dest.png
+   ${CMAKE_CURRENT_LIST_DIR}/images/scott/left/
+   ${CMAKE_CURRENT_LIST_DIR}/images/scott/right/
+   
+
 )
 add_example(shapes)
 add_example(typography)
