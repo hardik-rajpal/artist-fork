@@ -15,6 +15,7 @@ class CycObject{
     std::function<void(int)> onKeyPress=NULL;
     CycCanvas *cyccnv;
     CycObject();
+    //TODO HR: setCanvas method 
     CycObject(CycCanvas &cyccnv,float cx, float cy);
     virtual void render(cycfi::artist::canvas &cnv)=0;
     virtual bool inRange(float x, float y)=0;

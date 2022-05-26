@@ -117,6 +117,7 @@ function(add_example name)
          host/linux/cycoop/CycCanvas.cpp
          host/linux/cycoop/CycSprite.cpp
          host/linux/cycoop/CycText.cpp
+         host/linux/cycoop/CycPath.cpp
 
 
 
