@@ -9,6 +9,7 @@
 class CycObject;
 class CycCanvas{
     public:
+    cycfi::artist::color background_color = cycfi::artist::colors::white;
     std::vector<CycObject*> objects = {};
     int globStatus = -1;
     std::thread * t1;

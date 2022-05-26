@@ -5,6 +5,7 @@
 #include<iostream>
 CycCanvas::CycCanvas(int argc, char const* argv[], cycfi::artist::extent window_size, cycfi::artist::color background_color){
    t1 =  new std::thread(runner,this,argc,argv,window_size,colors::gray[10],true);
+   this->background_color = background_color;
 }
 void CycCanvas::click(float x, float y, int type){
    if(onClick!=NULL){

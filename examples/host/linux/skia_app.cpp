@@ -105,7 +105,7 @@ namespace
             {
                auto ctx = offscreen_image{ offscreen };
                auto offscreen_cnv = canvas{ ctx.context() };
-               cnv.fill_style(state._bkd);
+               cnv.fill_style(state.cyccnv->background_color);
                cnv.fill_rect({ 0, 0, state._size });
                for(auto obj:(state.cyccnv->objects)){
                   obj->update(cnv);

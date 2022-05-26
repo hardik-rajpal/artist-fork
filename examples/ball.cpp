@@ -32,26 +32,13 @@ float opacity = 1.0;
 int numRuns = 0;
 int main(int argc, char const* argv[])
 {
-   CycCanvas c(argc, argv, window_size,colors::gray[10]);   
+   CycCanvas c(argc, argv, window_size,colors::pink);   
    CycText t(c,50,50,"nbc",50,cycfi::artist::colors::blue,cycfi::artist::colors::yellow);
-   c.onKeyPress = [&t](int keyval){
-      switch(keyval){
-         case 65361:
-            t.moveBy(0,-10);
-            break;
-         case 65362:
-            t.moveBy(10,0);
-            break;
-         case 65363:
-            t.moveBy(10,0);
-            break;
-         case 65364:
-            t.moveBy(0,10);
-            break;
-      }
-   };
+   CycCircle m(c,window_size.x/2,window_size.y/2,50,cycfi::artist::colors::alice_blue,cycfi::artist::colors::blanched_almond);
+
    while(c.globStatus!=0){
-   usleep(1000000);
+      m.moveBy(rand()%20 - 10,rand()%20-10);
+      usleep(10000);
    }
    srand(0);
    
