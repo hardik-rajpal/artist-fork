@@ -13,6 +13,9 @@ void CycObject::setVis(bool isVis){
 void CycObject::move(float x, float y){
     this->cx = x;
     this->cy = y;
+    if(isPenDown){
+        // this.paths[this.paths.size()-1].
+    }
 }
 void CycObject::moveBy(float dx, float dy){
     this->cx+=dx;
@@ -21,5 +24,11 @@ void CycObject::moveBy(float dx, float dy){
 void CycObject::update(cycfi::artist::canvas &cnv){
     if(isVis){
         render(cnv);
+    }
+}
+void CycObject::togglePen(){
+    isPenDown = !isPenDown;
+    if(isPenDown){
+        paths.push_back(CycPath(*cyccnv,cx,cy));
     }
 }

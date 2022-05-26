@@ -1,5 +1,6 @@
 #include"CycPath.h"
 #include<iostream>
+CycPath::CycPath(){};
 CycPath::CycPath(CycCanvas &cyccnv,float cx, float cy):CycObject(cyccnv,cx,cy){
     pts.push_back({cx,cy});
 };
