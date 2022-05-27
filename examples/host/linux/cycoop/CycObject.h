@@ -28,7 +28,7 @@ class CycObject{
     void move(float x, float y);
     void moveBy(float dx, float dy);
     void setVis(bool isVis);
-    void togglePen();
+    bool togglePen();
     void setPenType(float penStrokeWidth,cycfi::artist::color penStrokeColor);
 };
 #endif

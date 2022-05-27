@@ -40,6 +40,9 @@ int main(int argc, char const* argv[])
    m.togglePen();
    while(c.globStatus!=0){
       m.moveBy(rand()%20 - 10,rand()%20-10);
+      if(rand()%4==1){
+         m.togglePen();
+      }
       usleep(10000);
    }
    srand(0);

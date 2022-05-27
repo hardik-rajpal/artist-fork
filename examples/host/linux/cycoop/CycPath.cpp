@@ -22,7 +22,6 @@ void CycPath::render(cycfi::artist::canvas &cnv){
     cnv.begin_path();
     cnv.line_join(cnv.bevel_join);
     cnv.move_to(pts[0]);
-    std::cout<<pts.size()<<std::endl;
     for (int i=1;i<pts.size();i++){
         cnv.line_to(pts[i].x, pts[i].y);
     }

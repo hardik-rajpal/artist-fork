@@ -57,3 +57,9 @@ CycPoly::CycPoly(CycCanvas &cyccnv,float cx, float cy, float radius, int numside
 void CycPoly::render(art::canvas &cnv){
     
 }
+CycTurtle::CycTurtle(CycCanvas cyccnv, float cx, float cy):CycShape(cyccnv,cx,cy,cycfi::artist::colors::red,cycfi::artist::colors::black){
+    strokeWidth = 2;
+}
+void CycTurtle::render(art::canvas &cnv){
+    //traingle render about center.
+}

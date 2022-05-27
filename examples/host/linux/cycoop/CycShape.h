@@ -39,4 +39,11 @@ class CycPoly:public CycShape{
     void render(art::canvas &cnv);
     CycPoly(CycCanvas &cyccnv,float cx, float cy, float radius, int numsides);
 };
+class CycTurtle:public CycShape{
+    public:
+    float edgeLength=5;
+    CycTurtle(CycCanvas cyccnv, float cx, float cy);
+    void render(art::canvas &cnv);
+    bool inRange(float x, float y);
+};
 #endif
