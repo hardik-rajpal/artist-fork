@@ -5,18 +5,20 @@
 #include<vector>
 #include<functional>
 #include"CycCanvas.h"
-#include"CycPath.h"
 class CycCanvas;
 class CycObject;
+class CycPath;
 class CycObject{
     public:
     bool isVis = true;
     float cx,cy;
+    float penStrokeWidth = 5;
+    cycfi::artist::color penStrokeColor = cycfi::artist::colors::black;
     bool isPenDown = false;
     std::function<void(float,float,int)> onClick=NULL;
     std::function<void(int)> onKeyPress=NULL;
     CycCanvas *cyccnv;
-    std::vector<CycPath> paths;
+    std::vector<CycPath*> paths;
     CycObject();
     //TODO HR: setCanvas method 
     CycObject(CycCanvas &cyccnv,float cx, float cy);
@@ -27,5 +29,6 @@ class CycObject{
     void moveBy(float dx, float dy);
     void setVis(bool isVis);
     void togglePen();
+    void setPenType(float penStrokeWidth,cycfi::artist::color penStrokeColor);
 };
 #endif

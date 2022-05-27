@@ -1,4 +1,5 @@
 #include"CycObject.h"
+#include"CycPath.h"
 using namespace std;
 CycObject::CycObject(CycCanvas &cyccnv,float cx, float cy){
     this->cx=cx;
@@ -14,14 +15,14 @@ void CycObject::move(float x, float y){
     this->cx = x;
     this->cy = y;
     if(isPenDown){
-        this->paths[this->paths.size()-1].addPoint(x,y);
+        this->paths[this->paths.size()-1]->addPoint(x,y);
     }
 }
 void CycObject::moveBy(float dx, float dy){
     this->cx+=dx;
     this->cy+=dy;
     if(isPenDown){
-        this->paths[this->paths.size()-1].addPointRelative(dx,dy);
+        this->paths[this->paths.size()-1]->addPointRelative(dx,dy);
     }
 }
 void CycObject::update(cycfi::artist::canvas &cnv){
@@ -29,9 +30,13 @@ void CycObject::update(cycfi::artist::canvas &cnv){
         render(cnv);
     }
 }
+void CycObject::setPenType(float penStrokeWidth,cycfi::artist::color penStrokeColor){
+    this->penStrokeColor = penStrokeColor;
+    this->penStrokeWidth = penStrokeWidth;
+}
 void CycObject::togglePen(){
     isPenDown = !isPenDown;
     if(isPenDown){
-        paths.push_back(CycPath(*cyccnv,cx,cy));
+        paths.push_back(new CycPath(*cyccnv,cx,cy,penStrokeWidth,penStrokeColor));
     }
 }

@@ -34,32 +34,12 @@ int main(int argc, char const* argv[])
 {
    CycCanvas c(argc, argv, window_size,colors::pink);   
    // CycText t(c,50,50,"nbc",50,cycfi::artist::colors::blue,cycfi::artist::colors::yellow);
-   CycCircle m(c,window_size.x/2,window_size.y/2,50,cycfi::artist::colors::alice_blue,cycfi::artist::colors::blanched_almond);
-   CycPath p(c,window_size.x/2,window_size.y/2,2,cycfi::artist::colors::deep_pink);
+   CycCircle m(c,window_size.x/2,window_size.y/2,5,cycfi::artist::colors::alice_blue,cycfi::artist::colors::blanched_almond);
+   // CycPath p(c,window_size.x/2,window_size.y/2,2,cycfi::artist::colors::deep_pink);
+   m.setPenType(2,colors::deep_pink);
+   m.togglePen();
    while(c.globStatus!=0){
-      // m.moveBy(rand()%20 - 10,rand()%20-10);
-      cycfi::artist::point pt = p.getHead();
-      int dx,dy;
-      if(pt.x<0){
-         dx = rand()%20;
-      }
-      else if(pt.x>window_size.x){
-         dx = rand()%20 - 20;
-      }
-      else{
-         dx = rand()%20 - 10;
-      }
-      if(pt.y<0){
-         dy = rand()%20;
-      }
-      else if(pt.y>window_size.y){
-         dy = rand()%20 - 20;
-      }
-      else{
-         dy = rand()%20 - 10;
-      }
-      p.addPointRelative(dx,dy);
-      
+      m.moveBy(rand()%20 - 10,rand()%20-10);
       usleep(10000);
    }
    srand(0);
