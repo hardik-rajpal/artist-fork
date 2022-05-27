@@ -14,12 +14,15 @@ void CycObject::move(float x, float y){
     this->cx = x;
     this->cy = y;
     if(isPenDown){
-        // this.paths[this.paths.size()-1].
+        this->paths[this->paths.size()-1].addPoint(x,y);
     }
 }
 void CycObject::moveBy(float dx, float dy){
     this->cx+=dx;
     this->cy+=dy;
+    if(isPenDown){
+        this->paths[this->paths.size()-1].addPointRelative(dx,dy);
+    }
 }
 void CycObject::update(cycfi::artist::canvas &cnv){
     if(isVis){

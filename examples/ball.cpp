@@ -34,7 +34,7 @@ int main(int argc, char const* argv[])
 {
    CycCanvas c(argc, argv, window_size,colors::pink);   
    // CycText t(c,50,50,"nbc",50,cycfi::artist::colors::blue,cycfi::artist::colors::yellow);
-   // CycCircle m(c,window_size.x/2,window_size.y/2,50,cycfi::artist::colors::alice_blue,cycfi::artist::colors::blanched_almond);
+   CycCircle m(c,window_size.x/2,window_size.y/2,50,cycfi::artist::colors::alice_blue,cycfi::artist::colors::blanched_almond);
    CycPath p(c,window_size.x/2,window_size.y/2,2,cycfi::artist::colors::deep_pink);
    while(c.globStatus!=0){
       // m.moveBy(rand()%20 - 10,rand()%20-10);
