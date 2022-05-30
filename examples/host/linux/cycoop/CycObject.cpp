@@ -11,7 +11,7 @@ CycObject::CycObject(){};
 void CycObject::setVis(bool isVis){
     this->isVis=isVis;
 }
-void CycObject::move(float x, float y){
+void CycObject::moveTo(float x, float y){
     this->cx = x;
     this->cy = y;
     if(isPenDown){
