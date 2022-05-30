@@ -1,4 +1,12 @@
 #include"CycShape.h"
+#include<math.h>
+#include<utility>
+float degToRad(float deg){
+    return (deg/180.0)*M_PI;
+}
+std::pair<float,float> thetaToSinCos(float thetaDeg){
+    return std::pair(cos(degToRad(thetaDeg)),sin(degToRad(thetaDeg)));
+}
 
 CycShape::CycShape(CycCanvas &cyccnv,float cx, float cy):CycObject(cyccnv,cx,cy){}
 
@@ -61,5 +69,20 @@ CycTurtle::CycTurtle(CycCanvas cyccnv, float cx, float cy):CycShape(cyccnv,cx,cy
     strokeWidth = 2;
 }
 void CycTurtle::render(art::canvas &cnv){
-    //traingle render about center.
+    float inrad = edgeLength/sqrt(3);
+    cnv.begin_path();
+    cnv.move_to(cx,cy);
+    std::pair<float,float> cs = thetaToSinCos(theta);
+    cnv.move_to(cx+(inrad*cs.first),cy+(inrad*cs.second));
+    cs = thetaToSinCos(120+theta);
+    cnv.line_to(cx+(inrad*cs.first),cy+(inrad*cs.second));
+    cs = thetaToSinCos(240+theta);
+    cnv.line_to(cx+(inrad*cs.first),cy+(inrad*cs.second));
+    cnv.fill_style(fillColor);
+    cnv.stroke_style(strokeColor);
+    cnv.fill();
+    cnv.stroke();
+}   
+bool CycTurtle::inRange(float x, float y){
+    return true;
 }
