@@ -41,10 +41,17 @@ class CycPoly:public CycShape{
 };
 class CycTurtle:public CycShape{
     public:
-    float edgeLength=5;
+    float edgeLength=50;
     float theta = 0;
-    CycTurtle(CycCanvas cyccnv, float cx, float cy);
+    float scale = 1;
+    CycTurtle(CycCanvas &cyccnv, float cx, float cy);
     void render(art::canvas &cnv);
     bool inRange(float x, float y);
+    void forward(float dx);
+    void rotateBy(float dTheta);
+    void rotateTo(float theta);
+    void stamp();
+    void scaleBy(float dScale);
+    void scaleTo(float newScale);
 };
 #endif

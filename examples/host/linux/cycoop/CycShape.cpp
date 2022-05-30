@@ -1,6 +1,7 @@
 #include"CycShape.h"
 #include<math.h>
 #include<utility>
+#include<iostream>
 float degToRad(float deg){
     return (deg/180.0)*M_PI;
 }
@@ -65,13 +66,14 @@ CycPoly::CycPoly(CycCanvas &cyccnv,float cx, float cy, float radius, int numside
 void CycPoly::render(art::canvas &cnv){
     
 }
-CycTurtle::CycTurtle(CycCanvas cyccnv, float cx, float cy):CycShape(cyccnv,cx,cy,cycfi::artist::colors::red,cycfi::artist::colors::black){
-    strokeWidth = 2;
+CycTurtle::CycTurtle(CycCanvas &cyccnv, float cx, float cy):CycShape(cyccnv,cx,cy,cycfi::artist::colors::red,cycfi::artist::colors::black){
+    strokeWidth = 3;
 }
 void CycTurtle::render(art::canvas &cnv){
-    float inrad = edgeLength/sqrt(3);
+    float inrad = scale*edgeLength/sqrt(3);
+    cnv.line_width(strokeWidth);
+    cnv.stroke_color(strokeColor);
     cnv.begin_path();
-    cnv.move_to(cx,cy);
     std::pair<float,float> cs = thetaToSinCos(theta);
     cnv.move_to(cx+(inrad*cs.first),cy+(inrad*cs.second));
     cs = thetaToSinCos(120+theta);
@@ -79,10 +81,42 @@ void CycTurtle::render(art::canvas &cnv){
     cs = thetaToSinCos(240+theta);
     cnv.line_to(cx+(inrad*cs.first),cy+(inrad*cs.second));
     cnv.fill_style(fillColor);
-    cnv.stroke_style(strokeColor);
+    cnv.close_path();
     cnv.fill();
+
+    cnv.begin_path();
+    cs = thetaToSinCos(theta);
+    cnv.move_to(cx+(inrad*cs.first),cy+(inrad*cs.second));
+    cs = thetaToSinCos(120+theta);
+    cnv.line_to(cx+(inrad*cs.first),cy+(inrad*cs.second));
+    cs = thetaToSinCos(240+theta);
+    cnv.line_to(cx+(inrad*cs.first),cy+(inrad*cs.second));
+    cnv.fill_style(fillColor);
+    cnv.close_path();
     cnv.stroke();
+
 }   
 bool CycTurtle::inRange(float x, float y){
     return true;
+}
+void CycTurtle::forward(float dx){
+    std::pair<float,float> cs = thetaToSinCos(theta);
+    moveBy(cs.first*dx,cs.second*dx);
+}
+void CycTurtle::rotateBy(float dTheta){
+    theta+=dTheta;
+}
+void CycTurtle::rotateTo(float theta){
+    this->theta = theta;
+}
+void CycTurtle::stamp(){
+    CycTurtle * stamp = new CycTurtle(*cyccnv,cx,cy);
+    stamp->rotateTo(theta);
+    stamp->scaleTo(scale);
+}
+void CycTurtle::scaleBy(float dScale){
+    scale*=dScale;
+}
+void CycTurtle::scaleTo(float newScale){
+    scale = newScale;
 }

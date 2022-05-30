@@ -22,7 +22,7 @@ constexpr auto persistence = 0.10;
 #else
 constexpr auto persistence = 0.04;
 #endif
-constexpr auto window_size = extent{ 640, 360 };
+constexpr auto window_size = extent{ 900, 600 };
 constexpr float radius = 10;
 float posx = 100;
 float posy = 100;
@@ -33,17 +33,22 @@ int numRuns = 0;
 int main(int argc, char const* argv[])
 {
    CycCanvas c(argc, argv, window_size,colors::pink);   
-   // CycText t(c,50,50,"nbc",50,cycfi::artist::colors::blue,cycfi::artist::colors::yellow);
-   CycCircle m(c,window_size.x/2,window_size.y/2,5,cycfi::artist::colors::alice_blue,cycfi::artist::colors::blanched_almond);
-   // CycPath p(c,window_size.x/2,window_size.y/2,2,cycfi::artist::colors::deep_pink);
-   m.setPenType(2,colors::deep_pink);
-   m.togglePen();
+   CycTurtle t(c,100,50);
+   t.togglePen();
+   float rad = 100;
+   float theta = 30;
+   // CycRect r(c,100,100,100,100);
    while(c.globStatus!=0){
-      m.moveBy(rand()%20 - 10,rand()%20-10);
-      if(rand()%4==1){
-         m.togglePen();
+      if(rad>0){
+         t.forward(rad);
+         t.rotateBy(theta);
+         rad-=2;
+         if(int(rad)%4==0){
+            t.stamp();
+            t.scaleBy(0.95);
+         }
       }
-      usleep(10000);
+      usleep(100000);
    }
    srand(0);
    
