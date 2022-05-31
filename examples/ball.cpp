@@ -81,19 +81,7 @@ int main(int argc, char const *argv[])
     srand(0);
     CycCanvas c(argc, argv, window_size, colors::pink);
     CycTurtle t(c, 100, 50);
-    t.scaleTo(0.1);
-    t.setPenType(2, cycfi::artist::colors::brown);
-    t.setStrokeWidth(2);
-    t.moveTo(750, 700);
+    t.setPenType(5, cycfi::artist::colors::red);
     t.togglePen();
-    int x0 = t.cx, y0 = t.cy;
-    t.forward(100);
-    branch(200, t);
-    t.moveTo(x0, y0);
-    t.rotateBy(90);
-    while (c.globStatus != 0)
-    {
-        // t.rotateBy(10);
-        usleep(100000);
-    }
+    sleep(10);
 }
