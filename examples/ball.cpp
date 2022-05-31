@@ -78,20 +78,21 @@ int main(int argc, char const* argv[])
    srand(0);
    CycCanvas c(argc, argv, window_size,colors::pink);   
    CycTurtle t(c,100,50);
-   float rad = 100;
-   float theta = 30;
-   // CycRect r(c,100,100,100,100);
-   t.scaleTo(0.1);
-   t.rotateBy(80);
-   t.moveTo(750, 700);
-   t.togglePen();
-   int x0 = t.cx, y0 = t.cy;
-   t.rotateBy(90);
-   t.forward(100);
-   branch(400, t);
-   t.moveTo(x0, y0);
-   t.rotateBy(-30);
+//    float rad = 100;
+//    float theta = 30;
+//    // CycRect r(c,100,100,100,100);
+//    t.scaleTo(0.1);
+//    t.rotateBy(80);
+//    t.moveTo(750, 700);
+//    t.togglePen();
+//    int x0 = t.cx, y0 = t.cy;
+//    t.rotateBy(90);
+//    t.forward(100);
+//    branch(400, t);
+//    t.moveTo(x0, y0);
+//    t.rotateBy(-30);
    while(c.globStatus!=0){
+       t.rotateBy(10);
       usleep(100000);
    }
    
