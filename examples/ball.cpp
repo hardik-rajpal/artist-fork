@@ -80,8 +80,8 @@ int main(int argc, char const *argv[])
 {
     srand(0);
     CycCanvas c(argc, argv, window_size, colors::pink);
-    CycPoly p[100];
-    int nps = 100;
+    CycPoly p[2];
+    int nps = 2;
     sleep(5);
     for (int i = 0; i < nps; i++)
     {
