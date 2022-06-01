@@ -75,11 +75,18 @@ bool CycRect::inRange(float x, float y)
 {
     return (abs(cx - x) < (width + strokeWidth) / 2) && (abs(y - cy) < (height + strokeWidth) / 2);
 }
+CycPoly::CycPoly() : CycShape() {}
 CycPoly::CycPoly(CycCanvas &cyccnv, float cx, float cy, float radius, int numsides) : CycShape(cyccnv, cx, cy)
 {
     this->radius = radius;
     this->numsides = numsides;
 }
+void CycPoly::setPolyParams(float radius, int numsides)
+{
+    this->radius = radius;
+    this->numsides = numsides;
+}
+
 void CycPoly::render(art::canvas &cnv)
 {
     float inrad = radius;
@@ -90,7 +97,7 @@ void CycPoly::render(art::canvas &cnv)
     cnv.move_to(cx + (inrad * cs.first), cy + (inrad * cs.second));
     for (int i = 1; i < numsides; i++)
     {
-        cs = thetaToSinCos(120 * i);
+        cs = thetaToSinCos((360.0 / numsides) * i);
         cnv.line_to(cx + (inrad * cs.first), cy + (inrad * cs.second));
     }
 
@@ -103,7 +110,7 @@ void CycPoly::render(art::canvas &cnv)
     cnv.move_to(cx + (inrad * cs.first), cy + (inrad * cs.second));
     for (int i = 1; i < numsides; i++)
     {
-        cs = thetaToSinCos(120 * i);
+        cs = thetaToSinCos((360.0 / numsides) * i);
         cnv.line_to(cx + (inrad * cs.first), cy + (inrad * cs.second));
     }
     cnv.fill_style(fillColor);

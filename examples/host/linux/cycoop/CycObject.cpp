@@ -1,5 +1,7 @@
 #include "CycObject.h"
 #include "CycPath.h"
+#include "CycUtil.tpp"
+#include <algorithm>
 using namespace std;
 CycObject::CycObject(CycCanvas &cyccnv, float cx, float cy)
 {
@@ -56,4 +58,18 @@ bool CycObject::togglePen()
         paths.push_back(new CycPath(*cyccnv, cx, cy, penStrokeWidth, penStrokeColor));
     }
     return isPenDown;
+}
+
+int CycObject::getZIndex()
+{
+    return zIndex;
+}
+void CycObject::setZIndex(int i)
+{
+    zIndex = i;
+    auto ziGetter = [](CycObject *obj1, CycObject *obj2)
+    {
+        return obj1->zIndex < obj2->zIndex;
+    };
+    sort(this->cyccnv->objects.begin(), this->cyccnv->objects.end(), ziGetter);
 }

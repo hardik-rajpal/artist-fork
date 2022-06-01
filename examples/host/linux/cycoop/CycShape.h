@@ -45,6 +45,8 @@ public:
     float radius;
     bool inRange(float x, float y);
     void render(art::canvas &cnv);
+    void setPolyParams(float radius, int numsides);
+    CycPoly();
     CycPoly(CycCanvas &cyccnv, float cx, float cy, float radius, int numsides);
 };
 class CycTurtle : public CycShape

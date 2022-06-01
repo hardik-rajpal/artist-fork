@@ -15,15 +15,7 @@ constexpr auto persistence = 0.04;
 constexpr auto window_size = extent{600, 600};
 int rando(int m, int M)
 {
-    int h;
-    while (true)
-    {
-        h = rand();
-        if (m < h and h < M)
-        {
-            return h;
-        }
-    }
+    return (rand() % (M - m)) + m;
 }
 void branch(int lob, CycTurtle mm)
 {
@@ -76,32 +68,41 @@ void branch(int lob, CycTurtle mm)
         }
     }
 }
+std::vector<color> colorops =
+    {
+        colors::red,
+        colors::alice_blue,
+        colors::green,
+        colors::azure,
+        colors::purple,
+        colors::dark_olive_green};
 int main(int argc, char const *argv[])
 {
     srand(0);
     CycCanvas c(argc, argv, window_size, colors::pink);
-    CycTurtle t[3];
-    extent wc = {window_size.x / 2, window_size.y / 2};
-    float inRad = 100;
-    for (int i = 0; i < 3; i++)
+    CycPoly p[100];
+    int nps = 100;
+    sleep(5);
+    for (int i = 0; i < nps; i++)
     {
-        t[i].setCanvas(c);
-        t[i].setStrokeWidth(2);
-        t[i].scaleBy(0.5);
-        t[i].moveTo(wc.x, wc.y);
-        t[i].togglePen();
-        t[i].rotateBy(120 * i);
-        t[i].forward(inRad);
+        p[i].moveTo(window_size.x / 2 + rand() % 200 - 100, (window_size.y / 2) + rand() % 200 - 100);
+        p[i].setStrokeWidth(2);
+        p[i].fillColor = colorops[rand() % 6];
+        p[i].setPolyParams(rando(20, 80), rando(3, 12));
+        p[i].setCanvas(c);
     }
-    sleep(10);
-    for (int j = 0; j < 6; j++)
+    // for (int i = 0; i < nps; i++)
+    // {
+    //     p[i].togglePen();
+    //     p[i].setZIndex(1);
+    // }
+    for (int j = 0; j < 500; j++)
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < nps; i++)
         {
-            t[i].rotateBy(-51.43);
-            t[i].forward(inRad);
-            usleep(1000);
+            p[i].moveBy(rando(-20, 20), rando(-20, 20));
         }
+        usleep(100000);
     }
     sleep(10);
 }
