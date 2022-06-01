@@ -10,7 +10,7 @@ std::pair<float, float> thetaToSinCos(float thetaDeg)
 {
     return std::pair<float, float>(cos(degToRad(thetaDeg)), sin(degToRad(thetaDeg)));
 }
-
+CycShape::CycShape() : CycObject() {}
 CycShape::CycShape(CycCanvas &cyccnv, float cx, float cy) : CycObject(cyccnv, cx, cy) {}
 
 CycShape::CycShape(CycCanvas &cyccnv, float cx, float cy, cycfi::artist::color fillColor, cycfi::artist::color strokeColor) : CycObject(cyccnv, cx, cy)
@@ -30,6 +30,7 @@ void CycShape::setStrokeWidth(float strokeWidth)
 {
     this->strokeWidth = strokeWidth;
 }
+CycCircle::CycCircle() : CycShape() {}
 CycCircle::CycCircle(CycCanvas &cyccnv, float cx, float cy, float radius, art::color fillColor, art::color strokeColor) : CycShape(cyccnv, cx, cy, fillColor, strokeColor)
 {
     this->radius = radius;
@@ -52,6 +53,7 @@ bool CycCircle::inRange(float x, float y)
 {
     return sqrt((x - cx) * (x - cx) + (y - cy) * (y - cy)) < (radius + strokeWidth);
 }
+CycRect::CycRect() : CycShape() {}
 CycRect::CycRect(CycCanvas &cyccnv, float cx, float cy, float width, float height) : CycShape(cyccnv, cx, cy)
 {
     this->width = width;
@@ -80,6 +82,41 @@ CycPoly::CycPoly(CycCanvas &cyccnv, float cx, float cy, float radius, int numsid
 }
 void CycPoly::render(art::canvas &cnv)
 {
+    float inrad = radius;
+    cnv.line_width(strokeWidth);
+    cnv.stroke_color(strokeColor);
+    cnv.begin_path();
+    std::pair<float, float> cs = thetaToSinCos(0);
+    cnv.move_to(cx + (inrad * cs.first), cy + (inrad * cs.second));
+    for (int i = 1; i < numsides; i++)
+    {
+        cs = thetaToSinCos(120 * i);
+        cnv.line_to(cx + (inrad * cs.first), cy + (inrad * cs.second));
+    }
+
+    cnv.fill_style(fillColor);
+    cnv.close_path();
+    cnv.fill();
+
+    cnv.begin_path();
+    cs = thetaToSinCos(0);
+    cnv.move_to(cx + (inrad * cs.first), cy + (inrad * cs.second));
+    for (int i = 1; i < numsides; i++)
+    {
+        cs = thetaToSinCos(120 * i);
+        cnv.line_to(cx + (inrad * cs.first), cy + (inrad * cs.second));
+    }
+    cnv.fill_style(fillColor);
+    cnv.close_path();
+    cnv.stroke();
+}
+bool CycPoly::inRange(float x, float y)
+{
+    return true;
+}
+CycTurtle::CycTurtle() : CycShape()
+{
+    fillColor = art::colors::red;
 }
 CycTurtle::CycTurtle(CycCanvas &cyccnv, float cx, float cy) : CycShape(cyccnv, cx, cy, cycfi::artist::colors::red, cycfi::artist::colors::black)
 {

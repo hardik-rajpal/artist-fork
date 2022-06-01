@@ -12,7 +12,7 @@ constexpr auto persistence = 0.10;
 #else
 constexpr auto persistence = 0.04;
 #endif
-constexpr auto window_size = extent{1500, 800};
+constexpr auto window_size = extent{600, 600};
 int rando(int m, int M)
 {
     int h;
@@ -80,8 +80,28 @@ int main(int argc, char const *argv[])
 {
     srand(0);
     CycCanvas c(argc, argv, window_size, colors::pink);
-    CycTurtle t(c, 100, 50);
-    t.setPenType(5, cycfi::artist::colors::red);
-    t.togglePen();
+    CycTurtle t[3];
+    extent wc = {window_size.x / 2, window_size.y / 2};
+    float inRad = 100;
+    for (int i = 0; i < 3; i++)
+    {
+        t[i].setCanvas(c);
+        t[i].setStrokeWidth(2);
+        t[i].scaleBy(0.5);
+        t[i].moveTo(wc.x, wc.y);
+        t[i].togglePen();
+        t[i].rotateBy(120 * i);
+        t[i].forward(inRad);
+    }
+    sleep(10);
+    for (int j = 0; j < 6; j++)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            t[i].rotateBy(-51.43);
+            t[i].forward(inRad);
+            usleep(1000);
+        }
+    }
     sleep(10);
 }
