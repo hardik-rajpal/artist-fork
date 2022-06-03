@@ -18,7 +18,7 @@ public:
     cycfi::artist::color penStrokeColor = cycfi::artist::colors::black;
     bool isPenDown = false;
     std::function<void(float, float, int)> onClick = NULL;
-    std::function<void(int)> onKeyPress = NULL;
+    std::function<void(int, std::string)> onKeyPress = NULL;
     CycCanvas *cyccnv;
     std::vector<CycPath *> paths;
     CycObject();

@@ -49,6 +49,11 @@ void CycObject::setPenType(float penStrokeWidth, cycfi::artist::color penStrokeC
 {
     this->penStrokeColor = penStrokeColor;
     this->penStrokeWidth = penStrokeWidth;
+    if (this->paths.size() > 0)
+    {
+        this->paths[this->paths.size() - 1]->strokeColor = penStrokeColor;
+        this->paths[this->paths.size() - 1]->strokeWidth = penStrokeWidth;
+    }
 }
 bool CycObject::togglePen()
 {
@@ -56,6 +61,7 @@ bool CycObject::togglePen()
     if (isPenDown)
     {
         paths.push_back(new CycPath(*cyccnv, cx, cy, penStrokeWidth, penStrokeColor));
+        paths[paths.size() - 1]->setZIndex(-1);
     }
     return isPenDown;
 }

@@ -33,14 +33,14 @@ void CycCanvas::keyPress(int keyval)
 {
    if (onKeyPress != NULL)
    {
-      onKeyPress(keyval);
+      onKeyPress(keyval, keyMap.at(keyval));
    }
    std::cout << keyval << ":" << std::endl;
    for (auto obj : objects)
    {
       if (obj->onKeyPress != NULL)
       {
-         obj->onKeyPress(keyval);
+         obj->onKeyPress(keyval, keyMap.at(keyval));
       }
    }
 };

@@ -80,22 +80,22 @@ int main(int argc, char const *argv[])
 {
     srand(0);
     CycCanvas c(argc, argv, window_size, colors::pink);
-    CycPoly p[2];
-    int nps = 2;
+    CycPoly p[50];
+    int nps = 50;
     sleep(5);
     for (int i = 0; i < nps; i++)
     {
         p[i].moveTo(window_size.x / 2 + rand() % 200 - 100, (window_size.y / 2) + rand() % 200 - 100);
         p[i].setStrokeWidth(2);
-        p[i].fillColor = colorops[rand() % 6];
+        p[i].fill(colorops[rand() % 6]);
         p[i].setPolyParams(rando(20, 80), rando(3, 12));
         p[i].setCanvas(c);
     }
-    // for (int i = 0; i < nps; i++)
-    // {
-    //     p[i].togglePen();
-    //     p[i].setZIndex(1);
-    // }
+    for (int i = 0; i < nps; i++)
+    {
+        p[i].setPenType(5, colorops[rand() % 6]);
+        p[i].togglePen();
+    }
     for (int j = 0; j < 500; j++)
     {
         for (int i = 0; i < nps; i++)
@@ -103,6 +103,10 @@ int main(int argc, char const *argv[])
             p[i].moveBy(rando(-20, 20), rando(-20, 20));
         }
         usleep(100000);
+    }
+    for (int i = 0; i < nps; i++)
+    {
+        p[i].setVis(false);
     }
     sleep(10);
 }

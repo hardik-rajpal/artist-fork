@@ -31,15 +31,15 @@ public:
         {32, "space"},
         {65289, "enter"},
         {65293, "tab"},
-        {0, "backspace"},
-        {0, "delete"},
-        {0, "esc"},
+        {65288, "backspace"},
+        {65535, "delete"},
+        {65307, "esc"},
         // TODO HR: numbers.
 
     };
     std::thread *t1;
     std::function<void(float x, float y, int type)> onClick = NULL;
-    std::function<void(int type)> onKeyPress = NULL;
+    std::function<void(int type, std::string name)> onKeyPress = NULL;
     CycCanvas(int argc, char const *argv[], cycfi::artist::extent window_size, cycfi::artist::color background_color);
     void click(float x, float y, int type);
     void keyPress(int keyval);
