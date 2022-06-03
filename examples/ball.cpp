@@ -23,33 +23,19 @@ int main(int argc, char const *argv[])
     constexpr auto window_size = extent{600, 600};
     srand(0);
     CycCanvas c(argc, argv, window_size, colors::pink);
-    CycPoly p[50];
-    int nps = 50;
-    sleep(5);
-    for (int i = 0; i < nps; i++)
+    float el = window_size.x / 8;
+    CycRect rects[64];
+    for (int i = 0; i < 8; i++)
     {
-        p[i].moveTo(window_size.x / 2 + rand() % 200 - 100, (window_size.y / 2) + rand() % 200 - 100);
-        p[i].setStrokeWidth(2);
-        p[i].fill(colorops[rand() % 6]);
-        p[i].setPolyParams(rando(20, 80), rando(3, 12));
-        p[i].setCanvas(c);
-    }
-    for (int i = 0; i < nps; i++)
-    {
-        p[i].setPenType(5, colorops[rand() % 6]);
-        p[i].togglePen();
-    }
-    for (int j = 0; j < 500; j++)
-    {
-        for (int i = 0; i < nps; i++)
+        for (int j = 0; j < 8; j++)
         {
-            p[i].moveBy(rando(-20, 20), rando(-20, 20));
+            rects[8 * i + j].width = el;
+            rects[8 * i + j].height = el;
+            rects[8 * i + j].setCanvas(c);
+            rects[8 * i + j].setStrokeWidth(0);
+            rects[8 * i + j].moveTo(el * i + el / 2, el * j + el / 2);
+            rects[8 * i + j].fill(((i + j) % 2 == 0) ? colors::red : colors::white);
         }
-        usleep(100000);
     }
-    for (int i = 0; i < nps; i++)
-    {
-        p[i].setVis(false);
-    }
-    sleep(10);
+    sleep(1000);
 }
