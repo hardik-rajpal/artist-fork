@@ -25,6 +25,9 @@ int main(int argc, char const *argv[])
     CycCanvas c(argc, argv, window_size, colors::pink);
     float el = window_size.x / 8;
     CycRect rects[64];
+    cycfi::artist::color altcolor = cycfi::artist::colors::blue_violet;
+    cycfi::artist::color initcolor = cycfi::artist::colors::red;
+    
     for (int i = 0; i < 8; i++)
     {
         for (int j = 0; j < 8; j++)
@@ -35,6 +38,10 @@ int main(int argc, char const *argv[])
             rects[8 * i + j].setStrokeWidth(0);
             rects[8 * i + j].moveTo(el * i + el / 2, el * j + el / 2);
             rects[8 * i + j].fill(((i + j) % 2 == 0) ? colors::red : colors::white);
+            CycRect * rptr = &rects[8*i+j];
+            rects[8 *i + j].onClick = [rptr,altcolor,initcolor](float x, float y, int clicktype){
+                rptr->fill(altcolor==rptr->fillColor?initcolor:altcolor);
+            };
         }
     }
     sleep(1000);
